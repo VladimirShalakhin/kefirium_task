@@ -1,0 +1,60 @@
+version: '3'
+services:
+
+  backend:
+    build:
+      context: .
+      dockerfile: ./docker/backend/Dockerfile
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: unless-stopped
+    tty: true
+    working_dir: /var/www
+    volumes:
+      - ./backend:/var/www
+      - ./docker/backend/php.ini:/usr/local/etc/php/php.ini
+    depends_on:
+      - db
+
+  nginx:
+    image: nginx:alpine
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "80:80"
+    volumes:
+      - ./backend:/var/www # Пробрасываем локальную папку backend в контейнер как /var/www
+      - ./docker/nginx/conf.d/:/etc/nginx/conf.d/ # Передаем в контейнер конфигурационные файлы nginx
+    depends_on:
+      - backend
+
+  db:
+    image: postgres
+    container_name: auth_micro_service
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: auth_micro_service
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: password
+    volumes:
+      - dbdata:/var/lib/postgresql
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgAdmin
+    ports:
+      - "5050:80"
+    depends_on:
+      - db
+    environment:
+      PGADMIN_DEFAULT_EMAIL: mr.shalakhin@yandex.ru
+      PGADMIN_DEFAULT_PASSWORD: password
+
+# Тома
+volumes:
+  # Чтобы данные БД не пропадали после выключения создаем именованный том
+  dbdata:
+    driver: local

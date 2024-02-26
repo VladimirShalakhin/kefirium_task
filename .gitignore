@@ -1,0 +1,7 @@
+.idea
+/backend/config/jwt.php
+/backend/_ide_helper.php
+/backend/.phpstorm.meta.php
+/backend/storage/certs/jwt-rsa-4096-private.pem
+/backend/storage/certs/jwt-rsa-4096-public.pem
+/backend/storage/certs
