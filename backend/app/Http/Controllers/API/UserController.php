@@ -7,7 +7,6 @@ use App\Http\Requests\API\LoginRequest;
 use App\Http\Requests\Api\RegisterRequest;
 use App\Services\UserService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 
@@ -59,5 +58,11 @@ class UserController extends Controller
             'expires_in' => JWTAuth::factory()->getTTL() * 60,
             'user' => $userInfo['user'],
         ]);
+    }
+
+    public function logout(): JsonResponse
+    {
+        \auth()->logout();
+        return response()->json(['message' => 'Успешно произведен выход']);
     }
 }
