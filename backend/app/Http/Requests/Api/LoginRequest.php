@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests\Api;
+namespace App\Http\Requests\API;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class RegisterRequest extends FormRequest
+class LoginRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,7 @@ class RegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => 'required|email|unique:users',
+            'email' => 'required|email',
             'password' => 'required|regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/|min:6',
         ];
     }
@@ -34,7 +34,6 @@ class RegisterRequest extends FormRequest
         return [
             'email.required' => 'Почтовый адрес является обязательным полем для заполнения',
             'email.email' => 'Почтовый адрес должен быть заполнен в правильном формате',
-            'email.unique' => 'Указанный почтовый адрес уже зарегистрирован в системе, почтовый адрес должен быть уникальным',
             'password.required' => 'Пароль является обязательным полем для заполнения',
             'password.regex' => 'Пароль может содержать от 3 заглавных или прописных букв, цифру и специальный символ',
         ];
