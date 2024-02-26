@@ -1,0 +1,170 @@
+{
+	"info": {
+		"_postman_id": "650ba5ea-0192-4506-8752-d24e20cd28b3",
+		"name": "kefirium",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31789493"
+	},
+	"item": [
+		{
+			"name": "регистрация",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "Application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://backend.auth_micro_service.local/api/register?email=mr.shalakhin@yandex.ru&password=123Pass0rd!",
+					"protocol": "http",
+					"host": [
+						"backend",
+						"auth_micro_service",
+						"local"
+					],
+					"path": [
+						"api",
+						"register"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "mr.shalakhin@yandex.ru"
+						},
+						{
+							"key": "password",
+							"value": "123Pass0rd!"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "логин",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "Application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://backend.auth_micro_service.local/api/login?email=mr.shalakhin@yandex.ru&password=123Pass0rd!",
+					"protocol": "http",
+					"host": [
+						"backend",
+						"auth_micro_service",
+						"local"
+					],
+					"path": [
+						"api",
+						"login"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "mr.shalakhin@yandex.ru"
+						},
+						{
+							"key": "password",
+							"value": "123Pass0rd!"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "рефреш",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vYmFja2VuZC5hdXRoX21pY3JvX3NlcnZpY2UubG9jYWwvYXBpL2xvZ2luIiwiaWF0IjoxNzA4OTg1NjgzLCJleHAiOjE3MDg5ODkyODMsIm5iZiI6MTcwODk4NTY4MywianRpIjoiN2Z4a2JMNTJpS0hEdFBWdCIsInN1YiI6IjciLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.KLUFIZq_B6IhfRwVpJNqgIQYu4o4RsEV7duAv21sbjU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "Application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://backend.auth_micro_service.local/api/refresh",
+					"protocol": "http",
+					"host": [
+						"backend",
+						"auth_micro_service",
+						"local"
+					],
+					"path": [
+						"api",
+						"refresh"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "логаут",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vYmFja2VuZC5hdXRoX21pY3JvX3NlcnZpY2UubG9jYWwvYXBpL3JlZnJlc2giLCJpYXQiOjE3MDg5ODU2ODMsImV4cCI6MTcwODk4OTI5NiwibmJmIjoxNzA4OTg1Njk2LCJqdGkiOiI0OWZqZElaRDR5NloyZndtIiwic3ViIjoiNyIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.NDrgI6TNNAaZC7aCpcG5R0ldI-qgebjWmD9U0z_vjhs",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "Application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://backend.auth_micro_service.local/api/logout",
+					"protocol": "http",
+					"host": [
+						"backend",
+						"auth_micro_service",
+						"local"
+					],
+					"path": [
+						"api",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
