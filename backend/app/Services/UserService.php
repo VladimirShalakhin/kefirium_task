@@ -17,10 +17,8 @@ class UserService
         ]);
     }
 
-    public function createNewToken(string $email, string $password): array
+    public function createNewToken(string $token): array
     {
-        $token = Auth::attempt(['email' => $email, 'password' => $password]);
-
         if (! $token) {
             throw new UnauthorizedException();
         }

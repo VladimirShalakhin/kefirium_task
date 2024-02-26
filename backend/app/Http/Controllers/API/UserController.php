@@ -16,7 +16,7 @@ class UserController extends Controller
     public function __construct(
         protected UserService $userService
     ) {
-        $this->middleware('auth:api', ['except' => ['register', 'login']]);
+        $this->middleware('auth:api', ['except' => ['register', 'login', 'refresh']]);
     }
 
     /**
@@ -38,7 +38,20 @@ class UserController extends Controller
     {
         $email = $request->input('email');
         $password = $request->input('password');
-        $userInfo = $this->userService->createNewToken($email, $password);
+        $token = Auth::attempt(['email' => $email, 'password' => $password]);
+        $userInfo = $this->userService->createNewToken($token);
+
+        return response()->json([
+            'access_token' => $userInfo['token'],
+            'token_type' => 'bearer',
+            'expires_in' => JWTAuth::factory()->getTTL() * 60,
+            'user' => $userInfo['user'],
+        ]);
+    }
+
+    public function refresh(): JsonResponse
+    {
+        $userInfo = $this->userService->createNewToken(Auth::refresh());
 
         return response()->json([
             'access_token' => $userInfo['token'],
