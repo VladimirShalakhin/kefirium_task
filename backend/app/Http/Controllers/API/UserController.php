@@ -8,14 +8,16 @@ use App\Http\Requests\Api\RegisterRequest;
 use App\Services\UserService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
+use Laravel\Socialite\Facades\Socialite;
 use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class UserController extends Controller
 {
     public function __construct(
         protected UserService $userService
     ) {
-        $this->middleware('auth:api', ['except' => ['register', 'login', 'refresh']]);
+        $this->middleware('auth:api', ['except' => ['register', 'login', 'refresh', 'loginGoogle']]);
     }
 
     /**
@@ -63,6 +65,17 @@ class UserController extends Controller
     public function logout(): JsonResponse
     {
         \auth()->logout();
+
         return response()->json(['message' => 'Успешно произведен выход']);
+    }
+
+    public function loginGoogle(): RedirectResponse|\Illuminate\Http\RedirectResponse
+    {
+        return Socialite::driver('google')->redirect();
+    }
+
+    public function loginOrRegisterGoogle(): void
+    {
+        $this->userService->loginGoogle();
     }
 }

@@ -5,7 +5,7 @@ namespace App\Services;
 use App\Models\User;
 use Auth;
 use Illuminate\Validation\UnauthorizedException;
-use JWTAuth;
+use Laravel\Socialite\Facades\Socialite;
 
 class UserService
 {
@@ -26,5 +26,27 @@ class UserService
         $user = Auth::user();
 
         return ['user' => $user, 'token' => $token];
+    }
+
+    public function loginGoogle(): void
+    {
+        $user = Socialite::driver('google')->user();
+        $finduser = User::where('google_id', $user->id)->first();
+
+        if ($finduser) {
+
+            Auth::login($finduser);
+
+        } else {
+
+            $newUser = User::create([
+                'email' => $user->email,
+                'google_id' => $user->id,
+                'password' => encrypt('123456dummy'),
+
+            ]);
+
+            Auth::login($newUser);
+        }
     }
 }
