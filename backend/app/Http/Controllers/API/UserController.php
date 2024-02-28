@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Exceptions\UnauthorizedException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\LoginRequest;
 use App\Http\Requests\Api\RegisterRequest;
@@ -35,11 +36,19 @@ class UserController extends Controller
         ], 201);
     }
 
+    /**
+     * @throws UnauthorizedException
+     */
     public function login(LoginRequest $request): JsonResponse
     {
         $email = $request->input('email');
         $password = $request->input('password');
         $token = Auth::attempt(['email' => $email, 'password' => $password]);
+
+        if (! $token) {
+            throw new UnauthorizedException();
+        }
+
         $userInfo = $this->userService->createNewToken($token);
 
         return response()->json([
