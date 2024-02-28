@@ -19,7 +19,7 @@ class RegisterTest extends TestCase
             ],
             'password' => [
                 'Пароль является обязательным полем для заполнения',
-            ]
+            ],
         ]);
     }
 
